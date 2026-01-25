@@ -25,6 +25,7 @@ class S3Config:
         self.s3_buckets = self._parse_bucket_list(os.getenv("S3_BUCKETS"))
         self.s3_max_buckets = int(os.getenv("S3_MAX_BUCKETS", "5"))
         self.s3_object_max_keys = int(os.getenv("S3_OBJECT_MAX_KEYS", "1000"))
+        self.endpoint_url = os.getenv("ENDPOINT_URL", None)
 
         # Validate configuration
         self._validate()

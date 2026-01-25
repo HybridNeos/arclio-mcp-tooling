@@ -2,8 +2,11 @@
 Main entry point for running the AWS S3 MCP server via python -m aws_s3_mcp
 """
 
+import os
 import asyncio
 import logging
+from dotenv import load_dotenv
+load_dotenv()
 
 from aws_s3_mcp.app import mcp  # Import instance from central location
 
@@ -25,7 +28,7 @@ def main():
     """Main entry point for the MCP server."""
     try:
         logger.info("Starting AWS S3 MCP server...")
-        asyncio.run(mcp.run())
+        asyncio.run(mcp.run(transport=os.getenv("MCP_TRANSPORT_MODE", "stdio")))
     except KeyboardInterrupt:
         logger.info("Shutting down AWS S3 MCP server...")
     except Exception as e:

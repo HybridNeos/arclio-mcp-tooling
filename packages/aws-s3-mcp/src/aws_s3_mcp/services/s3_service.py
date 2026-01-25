@@ -85,9 +85,14 @@ class S3Service:
             }
 
         try:
-            async with self.session.client(
-                "s3", region_name=config.aws_region, config=self.boto_config
-            ) as s3_client:
+            client_kwargs = {
+                "region_name": config.aws_region,
+                "config": self.boto_config
+            }
+            if config.endpoint_url:
+                client_kwargs["endpoint_url"] = config.endpoint_url
+
+            async with self.session.client("s3", **client_kwargs) as s3_client:
                 logger.debug(
                     f"Listing objects in bucket '{bucket_name}' with prefix '{prefix}'"
                 )
@@ -164,9 +169,14 @@ class S3Service:
             }
 
         try:
-            async with self.session.client(
-                "s3", region_name=config.aws_region, config=self.boto_config
-            ) as s3_client:
+            client_kwargs = {
+                "region_name": config.aws_region,
+                "config": self.boto_config
+            }
+            if config.endpoint_url:
+                client_kwargs["endpoint_url"] = config.endpoint_url
+
+            async with self.session.client("s3", **client_kwargs) as s3_client:
                 logger.debug(f"Getting object '{key}' from bucket '{bucket_name}'")
 
                 # Get the object with retry logic
@@ -333,9 +343,14 @@ class S3Service:
             }
 
         try:
-            async with self.session.client(
-                "s3", region_name=config.aws_region, config=self.boto_config
-            ) as s3_client:
+            client_kwargs = {
+                "region_name": config.aws_region,
+                "config": self.boto_config
+            }
+            if config.endpoint_url:
+                client_kwargs["endpoint_url"] = config.endpoint_url
+
+            async with self.session.client("s3", **client_kwargs) as s3_client:
                 logger.debug(
                     f"Getting text content for object '{key}' from bucket '{bucket_name}'"
                 )
@@ -447,9 +462,14 @@ class S3Service:
             }
 
         try:
-            async with self.session.client(
-                "s3", region_name=config.aws_region, config=self.boto_config
-            ) as s3_client:
+            client_kwargs = {
+                "region_name": config.aws_region,
+                "config": self.boto_config
+            }
+            if config.endpoint_url:
+                client_kwargs["endpoint_url"] = config.endpoint_url
+
+            async with self.session.client("s3", **client_kwargs) as s3_client:
                 logger.debug(
                     f"Counting objects in bucket '{bucket_name}' with prefix '{prefix}'"
                 )
@@ -568,9 +588,14 @@ class S3Service:
             import base64
             import json
 
-            async with self.session.client(
-                "s3", region_name=config.aws_region, config=self.boto_config
-            ) as s3_client:
+            client_kwargs = {
+                "region_name": config.aws_region,
+                "config": self.boto_config
+            }
+            if config.endpoint_url:
+                client_kwargs["endpoint_url"] = config.endpoint_url
+
+            async with self.session.client("s3", **client_kwargs) as s3_client:
                 logger.debug(
                     f"Listing objects (paginated) in bucket '{bucket_name}' start_index={start_index}, batch_size={batch_size}"
                 )
@@ -705,9 +730,14 @@ class S3Service:
             }
 
         try:
-            async with self.session.client(
-                "s3", region_name=config.aws_region, config=self.boto_config
-            ) as s3_client:
+            client_kwargs = {
+                "region_name": config.aws_region,
+                "config": self.boto_config
+            }
+            if config.endpoint_url:
+                client_kwargs["endpoint_url"] = config.endpoint_url
+
+            async with self.session.client("s3", **client_kwargs) as s3_client:
                 logger.debug(
                     f"Extracting PDF text from object '{key}' in bucket '{bucket_name}'"
                 )
