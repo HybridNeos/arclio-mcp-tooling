@@ -112,6 +112,9 @@ class PreferenceModel(pl.LightningModule):
             num_labels=1,
             dtype=torch.bfloat16
         )
+        if not base_model.config.pad_token_id:
+            base_model.config.pad_token_id = base_model.config.eos_token_id[0] if isinstance(base_model.config.eos_token_id, list) else base_model.config.eos_token_id
+
         peft_config = LoraConfig(
             task_type=TaskType.SEQ_CLS,
             inference_mode=False,
@@ -181,7 +184,8 @@ class PreferenceModel(pl.LightningModule):
 # 4. Main Training Function
 def main() -> None:
     # --- Configuration ---
-    MODEL_NAME = "Skywork/Skywork-Reward-V2-Qwen3-0.6B" # A smaller model for a quick demonstration
+    MODEL_NAME = "Skywork/Skywork-Reward-V2-Qwen3-0.6B"
+    # MODEL_NAME = "meta-llama/Llama-3.2-1B-Instruct"
     
     dummy_data = {
         "train": HFDataset.from_dict({
@@ -224,9 +228,9 @@ def main() -> None:
     # --- Training ---
     trainer = pl.Trainer(
         max_epochs=EPOCHS,
-        accelerator="auto", # Automatically selects GPU if available
+        accelerator="auto",
         devices=1,
-        # precision="16-mixed" # Use mixed precision for better performance and less memory
+        # precision="16-mixed" 
     )
 
     trainer.fit(preference_model, data_module)
